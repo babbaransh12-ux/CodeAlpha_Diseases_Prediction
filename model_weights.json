@@ -1,0 +1,64 @@
+{
+  "model_type": "Logistic Regression",
+  "intercept": -24.34629067,
+  "coefficients": {
+    "Chest_Pain": 2.66563621,
+    "Shortness_of_Breath": 2.49369091,
+    "Fatigue": 2.63298665,
+    "Palpitations": 2.97383434,
+    "Dizziness": 2.69919581,
+    "Swelling": 2.45217442,
+    "Pain_Arms_Jaw_Back": 2.65976933,
+    "Cold_Sweats_Nausea": 2.54450674,
+    "High_BP": 1.64220755,
+    "High_Cholesterol": 1.55248653,
+    "Diabetes": 1.48471905,
+    "Smoking": 1.50469155,
+    "Obesity": 1.48024656,
+    "Sedentary_Lifestyle": 1.76402358,
+    "Family_History": 1.55297017,
+    "Chronic_Stress": 1.57021697,
+    "Gender": 1.40703566,
+    "Age": 0.12000579
+  },
+  "feature_order": [
+    "Chest_Pain",
+    "Shortness_of_Breath",
+    "Fatigue",
+    "Palpitations",
+    "Dizziness",
+    "Swelling",
+    "Pain_Arms_Jaw_Back",
+    "Cold_Sweats_Nausea",
+    "High_BP",
+    "High_Cholesterol",
+    "Diabetes",
+    "Smoking",
+    "Obesity",
+    "Sedentary_Lifestyle",
+    "Family_History",
+    "Chronic_Stress",
+    "Gender",
+    "Age"
+  ],
+  "metrics": {
+    "train_accuracy": 0.992612,
+    "test_accuracy": 0.991253,
+    "cv_score": 0.992408,
+    "error_rate": 0.008747
+  },
+  "confusion_matrix": {
+    "TN": 22562,
+    "FP": 184,
+    "FN": 214,
+    "TP": 22540
+  },
+  "dataset": {
+    "total_records": 70000,
+    "n_features": 18,
+    "positive_rate": 0.5,
+    "age_min": 20,
+    "age_max": 84,
+    "age_mean": 54.46
+  }
+}

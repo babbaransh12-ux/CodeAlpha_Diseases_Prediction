@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Heart Disease Risk Prediction Dashboard powered by Logistic Regression ML model trained on 70,000 patient records with 99.13% accuracy." />
+  <title>CardioSense | Heart Disease Risk Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="pulse-ring r1"></div>
+    <div class="pulse-ring r2"></div>
+    <div class="pulse-ring r3"></div>
+    <div class="particles" id="particles"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <div class="heart-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+      </div>
+      <span>CardioSense</span>
+    </div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link active" onclick="scrollToSection('hero')">Home</a>
+      <a href="#stats" class="nav-link" onclick="scrollToSection('stats')">Model Stats</a>
+      <a href="#predictor" class="nav-link" onclick="scrollToSection('predictor')">Risk Predictor</a>
+      <a href="#insights" class="nav-link" onclick="scrollToSection('insights')">Insights</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI-Powered Cardiac Analysis
+      </div>
+      <h1 class="hero-title">
+        Know Your <span class="gradient-text">Heart Risk</span><br/>Before It's Too Late
+      </h1>
+      <p class="hero-subtitle">
+        Advanced Logistic Regression model trained on <strong>70,000 patient records</strong> 
+        delivers <strong>99.13% accuracy</strong> in predicting heart disease risk.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToSection('predictor')">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          Check Your Risk
+        </button>
+        <button class="btn-secondary" onclick="scrollToSection('stats')">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          View Analytics
+        </button>
+      </div>
+
+      <!-- ECG Animation -->
+      <div class="ecg-container">
+        <svg class="ecg-line" viewBox="0 0 1200 100" preserveAspectRatio="none">
+          <polyline id="ecg-polyline" class="ecg-path" points="" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Floating Cards -->
+    <div class="floating-card fc1">
+      <div class="fc-icon">🫀</div>
+      <div class="fc-info">
+        <div class="fc-value">99.13%</div>
+        <div class="fc-label">Model Accuracy</div>
+      </div>
+    </div>
+    <div class="floating-card fc2">
+      <div class="fc-icon">📊</div>
+      <div class="fc-info">
+        <div class="fc-value">70K+</div>
+        <div class="fc-label">Patient Records</div>
+      </div>
+    </div>
+    <div class="floating-card fc3">
+      <div class="fc-icon">⚡</div>
+      <div class="fc-info">
+        <div class="fc-value">18</div>
+        <div class="fc-label">Risk Factors</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Model Statistics Section -->
+  <section class="section" id="stats">
+    <div class="section-header">
+      <h2 class="section-title">Model <span class="gradient-text">Performance</span></h2>
+      <p class="section-subtitle">Trained on the Early Med Heart Disease Risk Dataset with state-of-the-art accuracy</p>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card" data-value="99.13" data-suffix="%">
+        <div class="metric-icon metric-blue">📈</div>
+        <div class="metric-number" id="metric-test">0%</div>
+        <div class="metric-label">Testing Accuracy</div>
+        <div class="metric-bar">
+          <div class="metric-fill" style="width:0%" data-target="99.13"></div>
+        </div>
+      </div>
+      <div class="metric-card" data-value="99.26" data-suffix="%">
+        <div class="metric-icon metric-green">🎯</div>
+        <div class="metric-number" id="metric-train">0%</div>
+        <div class="metric-label">Training Accuracy</div>
+        <div class="metric-bar">
+          <div class="metric-fill" style="width:0%" data-target="99.26"></div>
+        </div>
+      </div>
+      <div class="metric-card" data-value="99.24" data-suffix="%">
+        <div class="metric-icon metric-purple">🔬</div>
+        <div class="metric-number" id="metric-cv">0%</div>
+        <div class="metric-label">Cross-Validation Score</div>
+        <div class="metric-bar">
+          <div class="metric-fill" style="width:0%" data-target="99.24"></div>
+        </div>
+      </div>
+      <div class="metric-card" data-value="0.87" data-suffix="%">
+        <div class="metric-icon metric-orange">⚠️</div>
+        <div class="metric-number" id="metric-err">0%</div>
+        <div class="metric-label">Error Rate</div>
+        <div class="metric-bar metric-bar-red">
+          <div class="metric-fill" style="width:0%" data-target="0.87"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confusion Matrix + Charts Row -->
+    <div class="charts-row">
+      <!-- Confusion Matrix -->
+      <div class="chart-card">
+        <h3 class="chart-title">Confusion Matrix</h3>
+        <p class="chart-subtitle">Test set: 45,500 predictions</p>
+        <div class="confusion-matrix">
+          <div class="cm-grid">
+            <div class="cm-header-cell"></div>
+            <div class="cm-header-cell cm-pred">Predicted No Risk</div>
+            <div class="cm-header-cell cm-pred">Predicted At Risk</div>
+            <div class="cm-label-cell">Actual No Risk</div>
+            <div class="cm-value tp" id="cm-tn">
+              <div class="cm-number" data-final="22,562">0</div>
+              <div class="cm-desc">True Negative</div>
+              <div class="cm-pct">99.19%</div>
+            </div>
+            <div class="cm-value fp" id="cm-fp">
+              <div class="cm-number" data-final="184">0</div>
+              <div class="cm-desc">False Positive</div>
+              <div class="cm-pct">0.81%</div>
+            </div>
+            <div class="cm-label-cell">Actual At Risk</div>
+            <div class="cm-value fn" id="cm-fn">
+              <div class="cm-number" data-final="214">0</div>
+              <div class="cm-desc">False Negative</div>
+              <div class="cm-pct">0.94%</div>
+            </div>
+            <div class="cm-value tn" id="cm-tp">
+              <div class="cm-number" data-final="22,540">0</div>
+              <div class="cm-desc">True Positive</div>
+              <div class="cm-pct">99.06%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dataset Overview Chart -->
+      <div class="chart-card">
+        <h3 class="chart-title">Dataset Overview</h3>
+        <p class="chart-subtitle">70,000 patient records distribution</p>
+        <canvas id="datasetChart" width="350" height="250"></canvas>
+      </div>
+
+      <!-- Risk Factors Chart -->
+      <div class="chart-card">
+        <h3 class="chart-title">Top Risk Factors</h3>
+        <p class="chart-subtitle">Feature prevalence in dataset</p>
+        <canvas id="riskFactorsChart" width="350" height="250"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Predictor Section -->
+  <section class="section predictor-section" id="predictor">
+    <div class="section-header">
+      <h2 class="section-title">Heart Risk <span class="gradient-text">Predictor</span></h2>
+      <p class="section-subtitle">Fill in your health information to calculate your personalized heart disease risk score</p>
+    </div>
+
+    <div class="predictor-container">
+      <!-- Input Form -->
+      <div class="form-card">
+        <div class="form-header">
+          <div class="form-icon">👤</div>
+          <div>
+            <h3>Patient Profile</h3>
+            <p>Enter your health details below</p>
+          </div>
+        </div>
+
+        <!-- Demographics -->
+        <div class="form-section">
+          <h4 class="form-section-title">Demographics</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age">Age</label>
+              <div class="slider-container">
+                <input type="range" id="age" min="20" max="84" value="45" class="slider" oninput="updateSlider('age', this.value)"/>
+                <div class="slider-display" id="age-display">45 years</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Gender</label>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="gender-male" onclick="setGender(1)">Male</button>
+                <button class="toggle-btn" id="gender-female" onclick="setGender(0)">Female</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Symptoms -->
+        <div class="form-section">
+          <h4 class="form-section-title">Current Symptoms</h4>
+          <div class="checkbox-grid">
+            <label class="checkbox-item" id="cb-chest">
+              <input type="checkbox" id="chest_pain" onchange="updatePrediction()" />
+              <div class="checkbox-icon">💔</div>
+              <span>Chest Pain</span>
+            </label>
+            <label class="checkbox-item" id="cb-breath">
+              <input type="checkbox" id="shortness_of_breath" onchange="updatePrediction()" />
+              <div class="checkbox-icon">😮‍💨</div>
+              <span>Shortness of Breath</span>
+            </label>
+            <label class="checkbox-item" id="cb-fatigue">
+              <input type="checkbox" id="fatigue" onchange="updatePrediction()" />
+              <div class="checkbox-icon">😴</div>
+              <span>Fatigue</span>
+            </label>
+            <label class="checkbox-item" id="cb-palp">
+              <input type="checkbox" id="palpitations" onchange="updatePrediction()" />
+              <div class="checkbox-icon">💓</div>
+              <span>Palpitations</span>
+            </label>
+            <label class="checkbox-item" id="cb-dizz">
+              <input type="checkbox" id="dizziness" onchange="updatePrediction()" />
+              <div class="checkbox-icon">😵</div>
+              <span>Dizziness</span>
+            </label>
+            <label class="checkbox-item" id="cb-swell">
+              <input type="checkbox" id="swelling" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🦵</div>
+              <span>Swelling</span>
+            </label>
+            <label class="checkbox-item" id="cb-pain">
+              <input type="checkbox" id="pain_arms_jaw" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🤚</div>
+              <span>Pain in Arms/Jaw/Back</span>
+            </label>
+            <label class="checkbox-item" id="cb-sweats">
+              <input type="checkbox" id="cold_sweats" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🥵</div>
+              <span>Cold Sweats / Nausea</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Medical History -->
+        <div class="form-section">
+          <h4 class="form-section-title">Medical History & Lifestyle</h4>
+          <div class="checkbox-grid">
+            <label class="checkbox-item" id="cb-bp">
+              <input type="checkbox" id="high_bp" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🩺</div>
+              <span>High Blood Pressure</span>
+            </label>
+            <label class="checkbox-item" id="cb-chol">
+              <input type="checkbox" id="high_cholesterol" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🧪</div>
+              <span>High Cholesterol</span>
+            </label>
+            <label class="checkbox-item" id="cb-diab">
+              <input type="checkbox" id="diabetes" onchange="updatePrediction()" />
+              <div class="checkbox-icon">💉</div>
+              <span>Diabetes</span>
+            </label>
+            <label class="checkbox-item" id="cb-smoke">
+              <input type="checkbox" id="smoking" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🚬</div>
+              <span>Smoking</span>
+            </label>
+            <label class="checkbox-item" id="cb-obese">
+              <input type="checkbox" id="obesity" onchange="updatePrediction()" />
+              <div class="checkbox-icon">⚖️</div>
+              <span>Obesity</span>
+            </label>
+            <label class="checkbox-item" id="cb-sed">
+              <input type="checkbox" id="sedentary" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🛋️</div>
+              <span>Sedentary Lifestyle</span>
+            </label>
+            <label class="checkbox-item" id="cb-fam">
+              <input type="checkbox" id="family_history" onchange="updatePrediction()" />
+              <div class="checkbox-icon">🧬</div>
+              <span>Family History</span>
+            </label>
+            <label class="checkbox-item" id="cb-stress">
+              <input type="checkbox" id="chronic_stress" onchange="updatePrediction()" />
+              <div class="checkbox-icon">😰</div>
+              <span>Chronic Stress</span>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-predict" onclick="runPrediction()">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          Analyze My Risk
+        </button>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="result-card" id="result-card">
+        <div class="result-initial" id="result-initial">
+          <div class="result-init-icon">🫀</div>
+          <h3>Your Risk Analysis</h3>
+          <p>Fill in the form and click "Analyze My Risk" to get your personalized cardiac risk assessment powered by our AI model.</p>
+          <div class="pulse-heart"></div>
+        </div>
+
+        <div class="result-output" id="result-output" style="display:none">
+          <!-- Dynamic content inserted by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights Section -->
+  <section class="section" id="insights">
+    <div class="section-header">
+      <h2 class="section-title">Health <span class="gradient-text">Insights</span></h2>
+      <p class="section-subtitle">Key patterns and findings from the dataset analysis</p>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight-card ic-red">
+        <div class="insight-icon">🔴</div>
+        <h3>Critical Risk Factors</h3>
+        <ul class="insight-list">
+          <li>Chest pain alone increases risk by <strong>~48%</strong></li>
+          <li>Combination of High BP + Diabetes = highest risk</li>
+          <li>Family history compounds all other risk factors</li>
+          <li>Cold sweats with chest pain = emergency signal</li>
+        </ul>
+      </div>
+      <div class="insight-card ic-orange">
+        <div class="insight-icon">🟠</div>
+        <h3>Lifestyle Factors</h3>
+        <ul class="insight-list">
+          <li>Sedentary lifestyle present in <strong>50.4%</strong> of cases</li>
+          <li>Smoking prevalence: <strong>50.3%</strong> in dataset</li>
+          <li>Obesity affects <strong>49.9%</strong> of patients</li>
+          <li>Chronic stress contributes to 50% of risk cases</li>
+        </ul>
+      </div>
+      <div class="insight-card ic-blue">
+        <div class="insight-icon">🔵</div>
+        <h3>Demographics</h3>
+        <ul class="insight-list">
+          <li>Age range: <strong>20 to 84 years</strong></li>
+          <li>Average patient age: <strong>54.5 years</strong></li>
+          <li>Male patients: <strong>54.9%</strong> of dataset</li>
+          <li>Risk peaks after <strong>age 50</strong></li>
+        </ul>
+      </div>
+      <div class="insight-card ic-green">
+        <div class="insight-icon">🟢</div>
+        <h3>Model Strengths</h3>
+        <ul class="insight-list">
+          <li><strong>99.13%</strong> testing accuracy achieved</li>
+          <li>Only <strong>398 misclassifications</strong> out of 45,500</li>
+          <li>Good Fit: no overfitting or underfitting</li>
+          <li>5-fold CV confirms robustness: <strong>99.24%</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Age Distribution Chart -->
+    <div class="age-chart-section">
+      <div class="chart-card full-width">
+        <h3 class="chart-title">Risk Distribution by Age Group</h3>
+        <p class="chart-subtitle">Estimated heart risk probability across age ranges based on model patterns</p>
+        <canvas id="ageRiskChart" width="800" height="300"></canvas>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <div class="disclaimer-icon">⚕️</div>
+      <div class="disclaimer-text">
+        <strong>Medical Disclaimer:</strong> This dashboard is for educational and informational purposes only. 
+        The AI predictions are based on statistical patterns and should NOT replace professional medical advice. 
+        Always consult a qualified healthcare provider for medical diagnosis and treatment.
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="heart-icon">❤️</div>
+        <span>CardioSense</span>
+      </div>
+      <p>Built with Logistic Regression ML · Trained on 70,000 records · 99.13% Accuracy</p>
+      <p class="footer-disclaimer">For educational purposes only. Not a substitute for medical advice.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
